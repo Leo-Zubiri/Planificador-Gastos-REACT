@@ -349,6 +349,7 @@ main {
     height: 3rem;
 }
 .modal .cerrar-modal img {
+    cursor: pointer;
     width: 100%;
 }
 
