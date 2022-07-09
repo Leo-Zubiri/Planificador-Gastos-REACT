@@ -1,11 +1,13 @@
 import { useState } from "react"
 import imgCerrarBtn from '../img/cerrar.svg'
+import Mensaje from "./Mensaje";
 
-const Modal = ({setModal,animarModal,setAnimarModal}) => {
+const Modal = ({setModal,animarModal,setAnimarModal,guardarGasto}) => {
 
     const [nombre, setNombre] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [categoria, setCategoria] = useState('');
+    const [mensaje, setMensaje] = useState('');
 
     const ocultarModal = () => { 
         
@@ -16,6 +18,21 @@ const Modal = ({setModal,animarModal,setAnimarModal}) => {
         },500)
     }
 
+    const handleSubmit = (e) => { 
+        e.preventDefault();
+        
+        if([nombre,cantidad,categoria].includes('')){
+            setMensaje('Todos los campos son obligatorios');
+
+            setTimeout(() => { 
+                setMensaje('');
+             },1500);
+            return
+        }
+
+        guardarGasto({nombre,cantidad,categoria});
+    }
+
   return (
     <div className="modal">
         <div className="cerrar-modal">
@@ -24,8 +41,13 @@ const Modal = ({setModal,animarModal,setAnimarModal}) => {
             />
         </div>
 
-        <form className={`formulario ${animarModal ? 'animar':'cerrar'}`}>
+        <form
+            className={`formulario ${animarModal ? 'animar':'cerrar'}`} 
+            onSubmit={handleSubmit}
+            >
             <legend>Nuevo Gasto</legend>
+
+            {mensaje && <Mensaje tipo='error'>{mensaje}</Mensaje>}
 
             <div className="campo">
                 <label htmlFor="nombre">Nombre Gasto</label>
@@ -64,7 +86,7 @@ const Modal = ({setModal,animarModal,setAnimarModal}) => {
                     <option value='comida'> Comida </option>
                     <option value='casa'> Casa </option>
                     <option value='ocio'> Ocio </option>
-                    <option value='gastos-varios'> Gastos Varios </option>
+                    <option value='gastos'> Gastos Varios </option>
                     <option value='salud'> Salud </option>
                  </select>
             </div>
