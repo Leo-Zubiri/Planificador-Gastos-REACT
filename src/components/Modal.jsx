@@ -5,7 +5,7 @@ import Mensaje from "./Mensaje";
 const Modal = ({setModal,animarModal,setAnimarModal,guardarGasto}) => {
 
     const [nombre, setNombre] = useState('');
-    const [cantidad, setCantidad] = useState('');
+    const [cantidad, setCantidad] = useState(0);
     const [categoria, setCategoria] = useState('');
     const [mensaje, setMensaje] = useState('');
 
@@ -69,7 +69,7 @@ const Modal = ({setModal,animarModal,setAnimarModal,guardarGasto}) => {
                     type="number"
                     placeholder="Añade la cantidad del gasto"
                     value={cantidad}
-                    onChange={(e) => { setCantidad(e.target.value) }}
+                    onChange={(e) => { setCantidad(Number(e.target.value)) }}
                 />
             </div>
 
