@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 
 import IconoNuevoGasto from './img/nuevo-gasto.svg'
@@ -18,9 +18,22 @@ function App() {
 
   const [gastos, setGastos] = useState([]);
 
+  const [gastoEditar, setGastoEditar] = useState({});
+
+  useEffect(() => { 
+    if(Object.keys(gastoEditar).length > 0){
+      setModal(true);
+  
+      setTimeout(() => { 
+        setAnimarModal(true);
+      },400)
+    }
+  },[gastoEditar]);
+
   //----------------------------------------------------------------------------
   const handleNuevoGasto = () => { 
     setModal(true);
+    setGastoEditar({})
 
     setTimeout(() => { 
       setAnimarModal(true);
@@ -28,14 +41,31 @@ function App() {
   }
 
   const guardarGasto = gasto => {
-    gasto.id = generarID();
-    gasto.fecha = Date.now();
-    setGastos([...gastos,gasto]);
-    
+    if(gasto.id){
+      // Actualizar
+      const gastosActualizados = gastos.map(gastoOriginal => gastoOriginal.id === 
+        gasto.id ? gasto : gastoOriginal)
+
+      setGastos(gastosActualizados);
+      setGastoEditar({});
+
+    }else{
+      // Nuevo
+      gasto.id = generarID();
+      gasto.fecha = Date.now();
+      setGastos([...gastos,gasto]);
+    }
     setModal(false);
     setTimeout(() => { 
       setAnimarModal(false);
     },400)
+  }
+
+  const eliminarGasto = (id) => { 
+    console.log('Eliminando',id);
+    const gastosActualizados = gastos.filter(gasto => gasto.id !== id);
+
+    setGastos(gastosActualizados);
   }
 
   //-----------------------------------------------------------------------------
@@ -55,6 +85,8 @@ function App() {
           <main>
             <ListadoGastos 
               gastos={gastos}
+              setGastoEditar={setGastoEditar}
+              eliminarGasto={eliminarGasto}
             />
           </main>
           <div className="nuevo-gasto">
@@ -73,6 +105,8 @@ function App() {
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}
           guardarGasto={guardarGasto}
+          gastoEditar={gastoEditar}
+          setGastoEditar={setGastoEditar}
         />}
 
     </div>
