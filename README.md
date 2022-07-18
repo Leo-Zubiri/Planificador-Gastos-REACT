@@ -98,3 +98,21 @@ import 'react-circular-progressbar/dist/styles.css'
     localStorage.setItem('presupuesto',presupuesto ?? 0)
   },[presupuesto]);
 ```
+---
+
+## **Como subí mi proyecto React a github pages**
+[Modulo gh-pages](https://www.npmjs.com/package/gh-pages)
+```javascript
+npm i gh-pages
+
+// En el package.json
+{
+  "name": "planificador-gastos-react",
+  "private": true,
+  "homepage": "https://leo-zubiri.github.io/planificador-gastos-react/",
+  "version": "0.0.0",
+  "scripts": {
+    "predeploy":"npm run build",
+    "deploy": "gh-pages -d dist",
+```
+
