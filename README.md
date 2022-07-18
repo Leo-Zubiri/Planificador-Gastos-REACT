@@ -114,5 +114,10 @@ npm i gh-pages
   "scripts": {
     "predeploy":"npm run build",
     "deploy": "gh-pages -d dist",
+
+
+...
+
+npm run deploy
 ```
 
