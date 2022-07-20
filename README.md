@@ -1,3 +1,6 @@
+![](./src/img/docs/final-app.png)
+---
+
 # **Aplicación para gestionar gastos en base a presupuesto**
 
 ---
